@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_sample/widgets/fav_star.dart';
 // import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import './widgets/button_section.dart';
 import './widgets/human_images.dart';
+
 void main() => runApp(SampleApp());
 class SampleApp extends StatelessWidget {
   @override
@@ -36,6 +38,7 @@ class SampleApp extends StatelessWidget {
                 ),
               ),
               buttonSection,
+              FavStarWedget(),
             ]),
           ),
         ),
