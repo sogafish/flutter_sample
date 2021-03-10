@@ -7,7 +7,13 @@ import './widgets/human_images.dart';
 
 import './widgets/gender_button.dart';
 
-void main() => runApp(MainPage());
+import './screens/detail.dart';
+
+void main() {
+  runApp(
+    MaterialApp(home: MainPage()),
+  );
+}
 
 class MainPage extends StatefulWidget {
   @override
@@ -22,6 +28,13 @@ class _MainPageWidget extends State<MainPage> {
     });
   }
 
+  void moveScreen(String humanName) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => DetailScreen(humanName: humanName))
+    );
+  }
+
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'First',
@@ -29,27 +42,14 @@ class _MainPageWidget extends State<MainPage> {
         primarySwatch: Colors.pink,  //MaterialColor
       ),
       home: Scaffold(
-        appBar: AppBar(
-          title: Text('First Title'),
-        ),
+        // appBar: AppBar(
+        //   title: Text('First Title'),
+        // ),
         body: Container(
           padding: EdgeInsets.all(10),
           child: Center(
             child: Column(children: [
-              humanImages,
-              Container(
-                margin: EdgeInsets.only(top: 20),
-                child: Center(
-                  child: Text.rich(
-                    TextSpan(
-                      children: <TextSpan>[
-                        TextSpan(text: 'Super ', style: TextStyle(fontStyle: FontStyle.italic, fontSize: 30)),
-                        TextSpan(text: 'Man', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30)),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
+              HumanImages(onSelect: moveScreen),
               buttonSection,
               FavStarWedget(),
               Row(              
@@ -67,7 +67,7 @@ class _MainPageWidget extends State<MainPage> {
                     isSelected: selectedGenderNum == 2,
                   ),
                 ],
-              )
+              ),
             ]),
           ),
         ),
