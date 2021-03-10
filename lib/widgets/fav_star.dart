@@ -11,12 +11,7 @@ class _FavStarWidgetState extends State<FavStarWedget> {
 
   void _toggleFav() {
     setState(() {
-      if (_isFaved) {
-        _favCount -= 1;
-      } else {
-        _favCount += 1;
-      }
-
+      _favCount += _isFaved ? -1 : 1;
       _isFaved = !_isFaved;
     });
   }

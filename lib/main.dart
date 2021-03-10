@@ -5,9 +5,22 @@ import 'package:flutter_sample/widgets/fav_star.dart';
 import './widgets/button_section.dart';
 import './widgets/human_images.dart';
 
-void main() => runApp(SampleApp());
-class SampleApp extends StatelessWidget {
+import './widgets/gender_button.dart';
+
+void main() => runApp(MainPage());
+
+class MainPage extends StatefulWidget {
   @override
+  _MainPageWidget createState() => _MainPageWidget();
+}
+class _MainPageWidget extends State<MainPage> {
+  int selectedGenderNum = 1;
+
+  void onChangeGender(int value) {
+    setState(() {
+      selectedGenderNum = value;
+    });
+  }
 
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -39,6 +52,22 @@ class SampleApp extends StatelessWidget {
               ),
               buttonSection,
               FavStarWedget(),
+              Row(              
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  GenderButton(
+                    onChange: onChangeGender,
+                    value: 1,
+                    isSelected: selectedGenderNum == 1,
+                  ),
+                  GenderButton(
+                    onChange: onChangeGender,
+                    value: 2,
+                    isSelected: selectedGenderNum == 2,
+                  ),
+                ],
+              )
             ]),
           ),
         ),
