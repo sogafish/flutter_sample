@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_sample/screens/my_list.dart';
 import 'package:flutter_sample/widgets/fav_star.dart';
 // import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -35,6 +38,13 @@ class _MainPageWidget extends State<MainPage> {
     );
   }
 
+  void goToList() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => MyListScreen())
+    );
+  }
+
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'First',
@@ -46,13 +56,14 @@ class _MainPageWidget extends State<MainPage> {
         //   title: Text('First Title'),
         // ),
         body: Container(
+          margin: EdgeInsets.only(top: 40),
           padding: EdgeInsets.all(10),
           child: Center(
             child: Column(children: [
               HumanImages(onSelect: moveScreen),
               buttonSection,
               FavStarWedget(),
-              Row(              
+              Row(     
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
@@ -68,6 +79,13 @@ class _MainPageWidget extends State<MainPage> {
                   ),
                 ],
               ),
+              GestureDetector(
+                onTap: goToList,
+                child: Text(
+                  "To List Page",
+                  style: TextStyle(fontSize: 30, color: Colors.cyanAccent),
+                ),
+              )
             ]),
           ),
         ),
