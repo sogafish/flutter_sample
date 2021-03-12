@@ -65,10 +65,13 @@ class _MyListScreen extends State<MyListScreen> {
     print(item);
     return ListTile(
       contentPadding: EdgeInsets.only(top: 20, left: 10, right: 10),
-      onTap: () => showCupertinoModalBottomSheet(
-        expand: false,
+      onTap: () => showBarModalBottomSheet(
+        expand: true,
         context: context,
+        bounce: true,
         backgroundColor: Colors.transparent,
+        barrierColor: Colors.transparent,
+        topControl: null,
         builder: (context) => Container(
           child: WebViewSheet(pageUrl: item['pageUrl'], title: item['name']),
         ),
