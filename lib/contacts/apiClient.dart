@@ -7,7 +7,6 @@ class _ApiClient {
   Future<T> get<T>(String endpoint) async {
     var url = Uri.http(urlBase, endpoint);
 
-    // Await the http get response, then decode the json-formatted response.
     var response = await http.get(url);
     print(response.statusCode);
 
