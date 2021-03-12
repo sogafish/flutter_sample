@@ -4,7 +4,6 @@ import 'dart:convert' as convert;
 import 'package:http/http.dart' as http;
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
-import '../modals/modal_scroll.dart';
 import '../widgets/webview_sheet.dart';
 
 class ListItem {
