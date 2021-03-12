@@ -1,20 +1,22 @@
-import 'dart:io';
-
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
 import 'package:flutter_sample/screens/my_list.dart';
 import 'package:flutter_sample/widgets/fav_star.dart';
-// import 'package:google_maps_flutter/google_maps_flutter.dart';
-
-import './widgets/button_section.dart';
-import './widgets/human_images.dart';
-
-import './widgets/gender_button.dart';
-
-import './screens/detail.dart';
+import 'package:flutter_sample/widgets/button_section.dart';
+import 'package:flutter_sample/widgets/human_images.dart';
+import 'package:flutter_sample/widgets/gender_button.dart';
+import 'package:flutter_sample/screens/detail.dart';
 
 void main() {
   runApp(
-    MaterialApp(home: MainPage()),
+    Provider<String>.value(
+      value: 'STRING',
+      child: MaterialApp(
+        home: MainPage(),
+      ),
+    ),
   );
 }
 
@@ -46,15 +48,13 @@ class _MainPageWidget extends State<MainPage> {
   }
 
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'First',
-      theme: new ThemeData(
-        primarySwatch: Colors.pink,  //MaterialColor
+    var providedString = Provider.of<String>(context);
+
+    return CupertinoApp(
+      title: providedString,
+      theme: new CupertinoThemeData(
       ),
       home: Scaffold(
-        // appBar: AppBar(
-        //   title: Text('First Title'),
-        // ),
         body: Container(
           margin: EdgeInsets.only(top: 40),
           padding: EdgeInsets.all(10),

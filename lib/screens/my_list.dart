@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-
-import 'dart:convert' as convert;
-import 'package:http/http.dart' as http;
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:flutter_sample/contacts/apiClient.dart';
 
 import '../widgets/webview_sheet.dart';
 
@@ -39,23 +37,11 @@ class _MyListScreen extends State<MyListScreen> {
   }
 
   Future<void> fetchList() async {
-    var url = Uri.http('localhost:3000', '/');
-
-    // Await the http get response, then decode the json-formatted response.
-    var response = await http.get(url);
-
-    if (response.statusCode == 200) {
-      var jsonResponse = convert.jsonDecode(response.body);
-      print(jsonResponse);
-      var itemList = jsonResponse['body'];
-      print(itemList.length);
-      if (itemList.length >= 1) {
-        setState(() {
-          _list = itemList;
-        });
-      }
-    } else {
-      print('Request failed status: ${response.statusCode}.');
+    var response = await apiClient.get('/');
+    if (response['body'].length >= 1) {
+      setState(() {
+        _list = response['body'];
+      });
     }
   }
 
@@ -66,7 +52,6 @@ class _MyListScreen extends State<MyListScreen> {
         title: Text('ListPage'),
       ),
       body: Container(
-        margin: EdgeInsets.only(top: 20),
         child: _list.length >= 1 ? ListView.builder(
           itemCount: _list.length,
           itemBuilder: _buildListItems,
@@ -76,32 +61,32 @@ class _MyListScreen extends State<MyListScreen> {
   }
 
   ListTile _buildListItems(BuildContext context, int index) {
-      var item = _list[index];
-      print(item);
-      return ListTile(
-        onTap: () => showCupertinoModalBottomSheet(
-          expand: false,
-          context: context,
-          backgroundColor: Colors.transparent,
-          builder: (context) => Container(
-            child: WebViewSheet(pageUrl: item['pageUrl'], title: item['name']),
-            // child: NestedScrollModal(),
+    var item = _list[index];
+    print(item);
+    return ListTile(
+      contentPadding: EdgeInsets.only(top: 20, left: 10, right: 10),
+      onTap: () => showCupertinoModalBottomSheet(
+        expand: false,
+        context: context,
+        backgroundColor: Colors.transparent,
+        builder: (context) => Container(
+          child: WebViewSheet(pageUrl: item['pageUrl'], title: item['name']),
+        ),
+      ),
+      subtitle: Row(
+        children: [
+          Image(
+            image: NetworkImage(item['thumbnail']),
+            fit: BoxFit.cover,
+            height: 80,
+            width: 80,
           ),
-        ),
-        subtitle: Row(
-          children: [
-            Image(
-              image: NetworkImage(item['thumbnail']),
-              fit: BoxFit.cover,
-              height: 80,
-              width: 80,
-            ),
-            Padding(
-              padding: EdgeInsets.only(left: 20),
-              child: Text(item['name'], style: TextStyle(fontSize: 18))
-            ),
-          ],
-        ),
-      );
+          Padding(
+            padding: EdgeInsets.only(left: 20),
+            child: Text(item['name'], style: TextStyle(fontSize: 18))
+          ),
+        ],
+      ),
+    );
   }
 }
